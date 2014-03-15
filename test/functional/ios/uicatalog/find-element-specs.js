@@ -165,4 +165,61 @@ describe('uicatalog - find element -', function () {
         .nodeify(done);
     });
   });
+
+  describe('FindElement(s)ByUIAutomation', function () {
+    describe('findElementsByTagName -fakedout', function () {
+      it('should return all image elements with internally generated ids', function (done) {
+        driver.elements('-ios_uiautomation', 'image').then(function (els) {
+          els.length.should.be.above(0);
+          _(els).each(function (el) {
+            el.should.exist;
+          });
+        }).nodeify(done);
+      });
+    });/*
+    it('can process most basic UIAutomation query', function (done) {
+
+    });
+    it('can chain simple UIAutomation calls', function (done) {
+
+    });
+    it('can find elements by index', function (done) {
+
+    });
+    it('can fine elements by index somewhere in the middle of the query', function (done) {
+
+    });
+    it('can find elements by index multiple times', function (done) {
+
+    });
+    it('can find elements by name', function (done) {
+
+    });
+    it('can fine elements by name somewhere in the middle of the query', function (done) {
+
+    });
+    it('can find elements by name multiple times', function (done) {
+
+    });
+    it('can find elements by name and index', function (done) {
+
+    });
+    describe('start from a given context instead of root target', function() {
+      it('can process a simple query', function (done) {
+
+      });
+      it('can chain UIAutomation calls', function (done) {
+
+      });
+      it('can find elements by name', function (done) {
+
+      });
+      it('can find elements by index', function (done) {
+
+      });
+      it('can find elements by name and index', function (done) {
+
+      });
+    });*/
+  });
 });
