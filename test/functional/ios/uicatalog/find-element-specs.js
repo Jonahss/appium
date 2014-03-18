@@ -218,41 +218,39 @@ describe('uicatalog - find element -', function () {
         els.length.should.equal(1);
       }).nodeify(done);
     });
-    /*
-    it('can fine elements by index somewhere in the middle of the query', function (done) {
-
-    });
     it('can find elements by index multiple times', function (done) {
-
+      driver.element('-ios_uiautomation', '.elements()[1].cells()[2]').getAttribute('name')
+      .should.become('TextFields, Uses of UITextField')
+      .nodeify(done);
     });
     it('can find elements by name', function (done) {
-
-    });
-    it('can fine elements by name somewhere in the middle of the query', function (done) {
-
-    });
-    it('can find elements by name multiple times', function (done) {
-
+      driver.element('-ios_uiautomation', '.elements()["UICatalog"]').getAttribute('name')
+      .should.become('UICatalog')
+      .nodeify(done);
     });
     it('can find elements by name and index', function (done) {
-
-    }); /*
-    describe('start from a given context instead of root target', function() {
+      driver.element('-ios_uiautomation', '.elements()["Empty list"].cells()[3]').getAttribute('name')
+      .should.become('SearchBar, Use of UISearchBar')
+      .nodeify(done);
+    });
+    describe('start from a given context instead of root target', function (done) {
       it('can process a simple query', function (done) {
-
-      });
-      it('can chain UIAutomation calls', function (done) {
-
+        driver.element('-ios_uiautomation', '.elements()[1]').then(function (el) {
+          el.elements('-ios_uiautomation', '.elements()').then(function (els) {
+            els.length.should.equal(12);
+            _(els).each(function (el) {
+              el.should.exist;
+            });
+          }).nodeify(done);
+        });
       });
       it('can find elements by name', function (done) {
-
+        driver.element('-ios_uiautomation', '.elements()[1]').then(function (el) {
+          el.element('-ios_uiautomation', '.elements()["Buttons, Various uses of UIButton"]').then(function (el) {
+            el.should.exist;
+          }).nodeify(done);
+        });
       });
-      it('can find elements by index', function (done) {
-
-      });
-      it('can find elements by name and index', function (done) {
-
-      });
-    });*/
+    });
   });
 });
