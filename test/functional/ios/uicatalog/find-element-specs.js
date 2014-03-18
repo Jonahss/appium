@@ -151,25 +151,39 @@ describe('uicatalog - find element -', function () {
   });
 
   describe('FindElement(s)ByUIAutomation', function () {
-    describe('findElementsByTagName -fakedout', function () {
-      it('should return all image elements with internally generated ids', function (done) {
-        driver.elements('-ios_uiautomation', 'image').then(function (els) {
-          els.length.should.be.above(0);
-          _(els).each(function (el) {
-            el.should.exist;
-          });
-        }).nodeify(done);
-      });
-    });/*
+
     it('can process most basic UIAutomation query', function (done) {
-
+      driver.elements('-ios_uiautomation', '.elements()').then(function (els) {
+        els.length.should.equal(2);
+        _(els).each(function (el) {
+          el.should.exist;
+        });
+      }).nodeify(done);
     });
-    it('can chain simple UIAutomation calls', function (done) {
-
+    it('can process UIAutomation queries if user leaves out the first period', function (done) {
+      driver.elements('-ios_uiautomation', 'elements()').then(function (els) {
+        els.length.should.equal(2);
+        _(els).each(function (el) {
+          el.should.exist;
+        });
+      }).nodeify(done);
     });
-    it('can find elements by index', function (done) {
-
+    it('can get a single element', function (done) {
+      driver.element('-ios_uiautomation', '.elements()[0]').getAttribute('name')
+      .should.become('UICatalog')
+      .nodeify(done);
     });
+    it('can get a single element', function (done) {
+      driver.element('-ios_uiautomation', '.elements()[1]').getAttribute('name')
+      .should.become('Empty list')
+      .nodeify(done);
+    });
+    it('can get single element as array', function (done) {
+      driver.elements('-ios_uiautomation', '.tableViews()[0]').then(function (els) {
+        els.length.should.equal(1);
+      }).nodeify(done);
+    });
+    /*
     it('can fine elements by index somewhere in the middle of the query', function (done) {
 
     });
@@ -187,7 +201,7 @@ describe('uicatalog - find element -', function () {
     });
     it('can find elements by name and index', function (done) {
 
-    });
+    }); /*
     describe('start from a given context instead of root target', function() {
       it('can process a simple query', function (done) {
 
