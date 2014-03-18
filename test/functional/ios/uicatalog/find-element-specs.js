@@ -92,6 +92,14 @@ describe('uicatalog - find element -', function () {
       return driver.elementByTagName('tableCell').click();
     };
 
+    if (process.env.FAST_TESTS) {
+      afterEach(function (done) {
+        driver
+          .back()
+          .nodeify(done);
+      });
+    }
+
     it('should return the last button', function (done) {
       driver
         .resolve(setupXpath(driver))
@@ -167,6 +175,17 @@ describe('uicatalog - find element -', function () {
   });
 
   describe('FindElement(s)ByUIAutomation', function () {
+
+    before(function (done) {
+      driver.element('-ios_uiautomation', '.navigationBars()[0]')
+      .getAttribute('name').then(function (name) {
+        if (name !== 'UICatalog') {
+          driver.back().done();
+        } else {
+          done();
+        }
+      });
+    });
 
     it('can process most basic UIAutomation query', function (done) {
       driver.elements('-ios_uiautomation', '.elements()').then(function (els) {
