@@ -172,4 +172,14 @@ describe("apidemo - find elements -", function () {
         .nodeify(done);
     });
   });
+  describe('invalid locator strategy', function () {
+    it('should not accept -ios_uiautomation locator strategy', function (done) {
+      driver
+        .elements('-ios_uiautomation', '.elements()').catch(function (err) {
+          throw JSON.stringify(err.cause.value);
+        })
+        .should.be.rejectedWith(/Invalid locator strategy/)
+        .nodeify(done);
+    });
+  });
 });

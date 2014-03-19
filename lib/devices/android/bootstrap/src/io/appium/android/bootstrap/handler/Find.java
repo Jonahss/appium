@@ -74,8 +74,14 @@ public class Find extends CommandHandler {
     final Hashtable<String, Object> params = command.params();
 
     // only makes sense on a device
-    final Strategy strategy = Strategy.fromString((String) params
-        .get("strategy"));
+    final Strategy strategy;
+    try {
+       strategy = Strategy.fromString((String) params
+          .get("strategy"));
+    } catch (final InvalidStrategyException e) {
+        return getErrorResult(e.getMessage());
+    }
+
     final String contextId = (String) params.get("context");
 
     if (strategy == Strategy.DYNAMIC) {
