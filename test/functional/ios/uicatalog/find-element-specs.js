@@ -24,6 +24,28 @@ describe('uicatalog - find element -', function () {
         .getAttribute('name').should.become("Buttons, Various uses of UIButton")
       .nodeify(done);
   });
+  it('should find an element by name', function (done) {
+    driver.element('accessibility_id', 'UICatalog').then(function (el) {
+      el.should.exist;
+    }).nodeify(done);
+  });
+  it('should find a deeply nested element by name', function (done) {
+    driver.element('accessibility_id', 'UINavigationBarBackIndicatorDefault.png').then(function (el) {
+      el.should.exist;
+    }).nodeify(done);
+  });
+  it('should find an element by name beneath another element', function (done) {
+    driver.element('accessibility_id', 'Empty list').then(function (el) {
+      el.element('accessibility_id', 'Controls, Various uses of UIControl').then(function (innerEl) {
+        innerEl.should.exist;
+      }).nodeify(done);
+    });
+  });
+  it('should return an array of one element if the plural "elements" is used', function (done) {
+    driver.elements('accessibility_id', 'UICatalog').then(function (els) {
+      els.length.should.equal(1);
+    }).nodeify(done);
+  });
   it('should find a single element using elementByName', function (done) {
     driver
       .elementByName('UICatalog').then(function (el) {
