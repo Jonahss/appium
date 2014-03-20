@@ -154,14 +154,6 @@ describe("apidemo - find elements -", function () {
           .should.become("App")
         .nodeify(done);
     });
-    it('should get an error when strategy doesnt exist', function (done) {
-      driver
-        .elementByCss('button').catch(function (err) {
-          err.cause.value.message.should.equal("Invalid locator strategy: css selector");
-          throw err;
-        }).should.be.rejectedWith(/status: 9/)
-        .nodeify(done);
-    });
   });
 
   describe('unallowed tag names', function () {
@@ -178,7 +170,15 @@ describe("apidemo - find elements -", function () {
         .elements('-ios_uiautomation', '.elements()').catch(function (err) {
           throw JSON.stringify(err.cause.value);
         })
-        .should.be.rejectedWith(/Invalid locator strategy/)
+        .should.be.rejectedWith(/The requested resource could not be found/)
+        .nodeify(done);
+    });
+    it('should get an error when strategy doesnt exist', function (done) {
+      driver
+        .elementByCss('button').catch(function (err) {
+          err.cause.value.message.should.equal("Invalid locator strategy: css selector");
+          throw err;
+        }).should.be.rejectedWith(/status: 9/)
         .nodeify(done);
     });
   });

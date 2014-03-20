@@ -24,6 +24,12 @@ describe('uicatalog - find element -', function () {
         .getAttribute('name').should.become("Buttons, Various uses of UIButton")
       .nodeify(done);
   });
+  it('should find a single element using elementByName', function (done) {
+    driver
+      .elementByName('UICatalog').then(function (el) {
+        el.should.exist;
+      }).nodeify(done);
+  });
   it('should find an element within descendants', function (done) {
     driver
       .elementByTagName('tableView').then(function (el) {
@@ -72,8 +78,8 @@ describe('uicatalog - find element -', function () {
   });
 
   describe('findElementsByTagName textfield case', function () {
-    after(function () {
-      driver.clickBack();
+    after(function (done) {
+      driver.clickBack().then(done);
     });
     it('should find only one textfield', function (done) {
       driver
@@ -180,7 +186,7 @@ describe('uicatalog - find element -', function () {
       driver.element('-ios_uiautomation', '.navigationBars()[0]')
       .getAttribute('name').then(function (name) {
         if (name !== 'UICatalog') {
-          driver.back().done();
+          driver.back().then(done);
         } else {
           done();
         }

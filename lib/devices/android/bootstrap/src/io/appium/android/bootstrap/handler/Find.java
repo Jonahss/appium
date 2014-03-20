@@ -79,7 +79,7 @@ public class Find extends CommandHandler {
        strategy = Strategy.fromString((String) params
           .get("strategy"));
     } catch (final InvalidStrategyException e) {
-        return getErrorResult(e.getMessage());
+        return new AndroidCommandResult(WDStatus.UNKNOWN_COMMAND, e.getMessage());
     }
 
     final String contextId = (String) params.get("context");
