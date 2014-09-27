@@ -70,21 +70,6 @@ if %doAndroid% == 1 (
   ECHO =====Reset Android Complete=====
 
   ECHO.
-  ECHO =====Resetting Unlock.apk=====
-  ECHO.
-  CALL :runCmd "RD /S /Q build\unlock_apk | VER > NUL"
-  CALL :runCmd "MKDIR build\unlock_apk"
-  ECHO Building Unlock.apk
-  CALL :runCmd "git submodule update --init submodules\unlock_apk"
-  CALL :runCmd "PUSHD submodules\unlock_apk"
-  CALL :runCmd "ant clean"
-  CALL :runCmd "ant debug"
-  CALL :runCmd "POPD"
-  CALL :runCmd "COPY submodules\unlock_apk\bin\unlock_apk-debug.apk build\unlock_apk\unlock_apk-debug.apk"
-  ECHO.
-  ECHO =====Reset Unlock.apk Complete=====
-
-  ECHO.
   ECHO =====Resetting UnicodeIME.apk=====
   ECHO.
   CALL :runCmd "RD /S /Q build\unicode_ime_apk | VER > NUL"
