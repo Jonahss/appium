@@ -18,7 +18,6 @@ include_dev=false
 prod_deps=false
 appium_home=$(pwd)
 reset_successful=false
-has_reset_unlock_apk=false
 has_reset_ime_apk=false
 has_reset_settings_apk=false
 apidemos_reset=false
@@ -313,21 +312,6 @@ reset_gps_demo() {
     fi
 }
 
-reset_unlock_apk() {
-    if ! $has_reset_unlock_apk; then
-        run_cmd rm -rf build/unlock_apk
-        run_cmd mkdir -p build/unlock_apk
-        echo "* Building Unlock.apk"
-        unlock_base="submodules/unlock_apk"
-        run_cmd git submodule update --init $unlock_base
-        run_cmd pushd $unlock_base
-        run_cmd ant clean && run_cmd ant debug
-        run_cmd popd
-        run_cmd cp $unlock_base/bin/unlock_apk-debug.apk build/unlock_apk
-        has_reset_unlock_apk=true
-    fi
-}
-
 reset_unicode_ime() {
     if ! $has_reset_ime_apk; then
         run_cmd rm -rf build/unicode_ime_apk
@@ -368,7 +352,6 @@ reset_android() {
     run_cmd "$grunt" configAndroidBootstrap
     echo "* Building Android bootstrap"
     run_cmd "$grunt" buildAndroidBootstrap
-    reset_unlock_apk
     reset_unicode_ime
     reset_settings_apk
     if $include_dev ; then
@@ -444,7 +427,6 @@ reset_selendroid() {
     run_cmd pushd submodules/selendroid
     run_cmd git reset --hard
     run_cmd popd
-    reset_unlock_apk
     reset_unicode_ime
     if $include_dev ; then
         if ! $apidemos_reset; then
