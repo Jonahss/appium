@@ -4,7 +4,6 @@ bin/publish.sh
 reset.sh
 reset.bat
 bin/test.sh
-sample-code/
 test/
 lib/devices/android/bootstrap/bin/
 lib/devices/android/bootstrap/target/
