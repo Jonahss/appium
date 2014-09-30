@@ -3,7 +3,6 @@
 .DS_Store
 npm*.log
 node_modules
-sample-code
 *.trace
 xcuserdata
 *.sublime-*
