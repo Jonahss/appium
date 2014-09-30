@@ -163,16 +163,6 @@ reset_ios() {
     echo "* Installing ios-sim-locale"
     run_cmd rm -f build/ios-sim-locale
     run_cmd cp assets/ios-sim-locale build/ios-sim-locale
-    echo "* Cloning/updating udidetect"
-    run_cmd git submodule update --init submodules/udidetect
-    echo "* Building udidetect"
-    run_cmd pushd submodules/udidetect
-    run_cmd make
-    run_cmd popd
-    echo "* Moving udidetect into build/udidetect"
-    run_cmd rm -rf build/udidetect
-    run_cmd mkdir build/udidetect
-    run_cmd cp -R submodules/udidetect/udidetect build/udidetect/
     if $include_dev ; then
         if $npmlink ; then
             echo "* Cloning/npm linking appium-atoms"
