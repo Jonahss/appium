@@ -20,7 +20,6 @@ appium_home=$(pwd)
 reset_successful=false
 has_reset_ime_apk=false
 has_reset_settings_apk=false
-apidemos_reset=false
 toggletest_reset=false
 hardcore=false
 grunt="$(npm bin)/grunt"  # might not have grunt-cli installed with -g
@@ -241,13 +240,6 @@ reset_ios() {
     run_cmd cp -r submodules/libimobiledevice-macosx build/libimobiledevice-macosx
 }
 
-get_apidemos() {
-    echo "* Cloning/updating Android test app: ApiDemos"
-    run_cmd git submodule update --init submodules/ApiDemos
-    run_cmd rm -rf sample-code/apps/ApiDemos
-    run_cmd ln -s "$appium_home"/submodules/ApiDemos "$appium_home"/sample-code/apps/ApiDemos
-}
-
 uninstall_android_app() {
     echo "* Attempting to uninstall android app $1"
     if (which adb >/dev/null); then
@@ -269,15 +261,6 @@ uninstall_android_app() {
     else
         echo "* ADB not found, skipping"
     fi
-}
-
-reset_apidemos() {
-    run_cmd get_apidemos
-    echo "* Configuring and cleaning/building Android test app: ApiDemos"
-    run_cmd "$grunt" configAndroidApp:ApiDemos
-    run_cmd "$grunt" buildAndroidApp:ApiDemos
-    uninstall_android_app io.appium.android.apis
-    apidemos_reset=true
 }
 
 reset_toggle_test() {
@@ -347,7 +330,6 @@ reset_android() {
     reset_unicode_ime
     reset_settings_apk
     if $include_dev ; then
-        reset_apidemos
         reset_toggle_test
     fi
     echo "* Setting Android config to Appium's version"
@@ -378,10 +360,6 @@ reset_selendroid_quick() {
     run_cmd popd
     run_cmd "$grunt" fixSelendroidAndroidManifest
     if $include_dev ; then
-        if ! $apidemos_reset; then
-            reset_apidemos
-            uninstall_android_app io.appium.android.apis.selendroid
-        fi
         if ! $toggletest_reset; then
             reset_toggle_test
             uninstall_android_app io.appium.toggletest.selendroid
@@ -420,10 +398,6 @@ reset_selendroid() {
     run_cmd popd
     reset_unicode_ime
     if $include_dev ; then
-        if ! $apidemos_reset; then
-            reset_apidemos
-            uninstall_android_app io.appium.android.apis.selendroid
-        fi
         if ! $toggletest_reset; then
             reset_toggle_test
             uninstall_android_app io.appium.toggletest.selendroid
