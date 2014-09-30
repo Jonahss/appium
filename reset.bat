@@ -99,22 +99,6 @@ if %doAndroid% == 1 (
   ECHO.
   ECHO =====Reset Settings.apk Complete=====
 
-  :: Reset Android Dev
-  IF %doDev% == 1 (
-    ECHO.
-    ECHO =====Resetting API Demos=====
-    ECHO.
-    ECHO Cloning/updating Android test app: ApiDemos
-    CALL :runCmd "git submodule update --init submodules\ApiDemos"
-    CALL :runCmd "RD /S /Q sample-code\apps\ApiDemos | VER > NUL"
-    CALL :runCmd "MKDIR sample-code\apps\ApiDemos"
-    CALL :runCmd "XCOPY submodules\ApiDemos sample-code\apps\ApiDemos /E /Q"
-    CALL :runCmd "node_modules\.bin\grunt configAndroidApp:ApiDemos"
-    CALL :runCmd "node_modules\.bin\grunt buildAndroidApp:ApiDemos"
-    ECHO.
-    ECHO =====Reset API Demos Complete=====
-  )
-
   :: Reset ChromeDriver
   echo =====Resetting ChromeDriver=====
   setlocal enabledelayedexpansion
