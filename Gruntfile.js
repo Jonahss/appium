@@ -5,7 +5,6 @@ var path = require('path')
   , authorize = gruntHelpers.authorize
   , tail = gruntHelpers.tail
   , buildApp = gruntHelpers.buildApp
-  , buildSafariLauncherApp = gruntHelpers.buildSafariLauncherApp
   , signApp = gruntHelpers.signApp
   , setupAndroidBootstrap = gruntHelpers.setupAndroidBootstrap
   , setupAndroidApp = gruntHelpers.setupAndroidApp
@@ -105,9 +104,6 @@ module.exports = function (grunt) {
   grunt.registerTask('travis', ['jshint','jscs', 'unit']);
   grunt.registerTask('buildApp', "Build the test app", function (appDir, sdk) {
     buildApp(appDir, this.async(), sdk);
-  });
-  grunt.registerTask('buildSafariLauncherApp', "Build the SafariLauncher app", function (sdk, xcconfig) {
-    buildSafariLauncherApp(this.async(), sdk, xcconfig);
   });
   grunt.registerTask('signApp', "Sign the test app", function (certName) {
     signApp("TestApp", certName, this.async());
