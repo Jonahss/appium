@@ -208,24 +208,6 @@ reset_ios() {
     run_cmd rm -rf build/fruitstrap
     run_cmd mkdir -p build/fruitstrap
     run_cmd cp submodules/fruitstrap/fruitstrap build/fruitstrap
-    if $should_reset_realsafari; then
-        echo "* Cloning/updating SafariLauncher"
-        run_cmd git submodule update --init submodules/SafariLauncher
-        echo "* Building SafariLauncher for real devices"
-        run_cmd rm -rf build/SafariLauncher
-        run_cmd mkdir -p build/SafariLauncher
-        run_cmd rm -f submodules/Safarilauncher/target.xcconfig
-        echo "BUNDLE_ID = com.bytearc.SafariLauncher" >> submodules/Safarilauncher/target.xcconfig
-        if [[ ! -z $code_sign_identity ]]; then
-          echo "IDENTITY_NAME = " $code_sign_identity >> submodules/Safarilauncher/target.xcconfig
-        else
-          echo "IDENTITY_NAME = iPhone Developer" >> submodules/Safarilauncher/target.xcconfig
-        fi
-        echo "IDENTITY_CODE = " $provisioning_profile >> submodules/Safarilauncher/target.xcconfig
-        run_cmd "$grunt" buildSafariLauncherApp:iphoneos:"target.xcconfig"
-        echo "* Copying SafariLauncher for real devices to build"
-        run_cmd zip -r build/SafariLauncher/SafariLauncher submodules/SafariLauncher/build/Release-iphoneos/SafariLauncher.app
-    fi
     echo "* Cloning/updating libimobiledevice-macosx"
     run_cmd git submodule update --init submodules/libimobiledevice-macosx
     echo "* Copying libimobiledevice-macosx to build"

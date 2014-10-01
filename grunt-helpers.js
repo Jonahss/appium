@@ -346,19 +346,6 @@ module.exports.signApp = function (appName, certName, cb) {
   });
 };
 
-module.exports.buildSafariLauncherApp = function (cb, sdk, xcconfig) {
-  var appRoot = path.resolve(__dirname, "submodules", "SafariLauncher");
-  module.exports.build(appRoot, function (err) {
-    if (err !== null) {
-      console.log(err);
-      cb(false);
-    } else {
-      cb(true);
-    }
-  }, sdk, xcconfig);
-};
-
-
 var setupAndroidProj = function (grunt, projPath, args, cb) {
   if (!process.env.ANDROID_HOME) {
     grunt.fatal("Could not find Android SDK, make sure to export ANDROID_HOME");
