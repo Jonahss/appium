@@ -15,7 +15,6 @@ var path = require('path')
   , fixSelendroidAndroidManifest = gruntHelpers.fixSelendroidAndroidManifest
   , installAndroidApp = gruntHelpers.installAndroidApp
   , generateServerDocs = gruntHelpers.generateServerDocs
-  , generateAppiumIo = gruntHelpers.generateAppiumIo
   , setDeviceConfigVer = gruntHelpers.setDeviceConfigVer
   , setBuildTime = gruntHelpers.setBuildTime
   , getSampleCode = gruntHelpers.getSampleCode
@@ -142,9 +141,6 @@ module.exports = function (grunt) {
   });
   grunt.registerTask('docs', function () {
     generateServerDocs(grunt, this.async());
-  });
-  grunt.registerTask('generateAppiumIo', function () {
-    generateAppiumIo(grunt, this.async());
   });
   grunt.registerTask('setConfigVer', function (device) {
     setDeviceConfigVer(grunt, device, this.async());
