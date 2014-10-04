@@ -196,22 +196,6 @@ uninstall_android_app() {
     fi
 }
 
-reset_unicode_ime() {
-    if ! $has_reset_ime_apk; then
-        run_cmd rm -rf build/unicode_ime_apk
-        run_cmd mkdir -p build/unicode_ime_apk
-        echo "* Building UnicodeIME.apk"
-        ime_base="submodules/io.appium.android.ime"
-        run_cmd git submodule update --init $ime_base
-        run_cmd pushd $ime_base
-        run_cmd ant clean && run_cmd ant debug
-        run_cmd popd
-        run_cmd cp $ime_base/bin/UnicodeIME-debug.apk build/unicode_ime_apk
-        uninstall_android_app "io.appium.android.ime"
-        has_reset_ime_apk=true
-    fi
-}
-
 reset_settings_apk() {
     if ! $has_reset_settings_apk; then
         run_cmd rm -rf build/settings_apk
