@@ -136,15 +136,6 @@ reset_general() {
     fi
 }
 
-reset_sample_code() {
-    echo "* Initializing sample code and test apps"
-    if $hardcore ; then
-        run_cmd "$grunt" getSampleCode:hardcore
-    else
-        run_cmd "$grunt" getSampleCode
-    fi
-}
-
 reset_ios() {
     echo "RESETTING IOS"
     set +e
@@ -179,24 +170,6 @@ reset_ios() {
             echo "* Cloning/npm linking appium-adb"
             run_cmd ./bin/npmlink.sh -l appium-adb
         fi
-        if $ios7_active || $ios8_active ; then
-            if $hardcore ; then
-                echo "* Clearing out old UICatalog download"
-                run_cmd rm -rf ./sample-code/apps/UICatalog/
-            fi
-            if [ ! -d "./sample-code/apps/UICatalog" ]; then
-                echo "* Unzipping UICatalog app source"
-                run_cmd pushd ./sample-code/apps
-                run_cmd unzip UICatalog.zip
-                run_cmd popd
-            fi
-            echo "* Cleaning/rebuilding iOS test app: UICatalog"
-            run_cmd "$grunt" buildApp:UICatalog:iphonesimulator:$sdk_ver
-        fi
-        echo "* Cleaning/rebuilding iOS test app: TestApp"
-        run_cmd "$grunt" buildApp:TestApp:iphonesimulator:$sdk_ver
-        echo "* Cleaning/rebuilding iOS test app: WebViewApp"
-        run_cmd "$grunt" buildApp:WebViewApp:iphonesimulator$sdk_ver
     fi
     echo "* Cloning/updating libimobiledevice-macosx"
     run_cmd git submodule update --init submodules/libimobiledevice-macosx
@@ -225,30 +198,6 @@ uninstall_android_app() {
         fi
     else
         echo "* ADB not found, skipping"
-    fi
-}
-
-reset_toggle_test() {
-    echo "* Configuring and cleaning/building Android test app: ToggleTest"
-    run_cmd "$grunt" configAndroidApp:ToggleTest
-    run_cmd "$grunt" buildAndroidApp:ToggleTest
-    uninstall_android_app com.example.toggletest
-    toggletest_reset=true
-}
-
-reset_gps_demo() {
-    if $hardcore ; then
-        echo "* Removing previous copies of the gps demo"
-        run_cmd rm -rf sample-code/apps/gps-demo
-        run_cmd rm -rf sample-code/apps/gps-demo.zip
-    fi
-    if [ ! -d sample-code/apps/gps-demo ]; then
-        echo "* Downloading gps demo"
-        run_cmd pushd sample-code/apps
-        run_cmd curl http://www.impressive-artworx.de/tutorials/android/gps_tutorial_1.zip -o gps-demo.zip -s
-        run_cmd unzip gps-demo.zip
-        run_cmd mv GPSTutorial1 gps-demo
-        run_cmd popd
     fi
 }
 
