@@ -129,6 +129,7 @@
   },
   "optionalDependencies": {
     "udidetect": "~1.0.0",
-    "deviceconsole": "~1.0.0"
+    "deviceconsole": "~1.0.0",
+    "io.appium.settings": "~1.0.0"
   }
 }
